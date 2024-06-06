@@ -31,7 +31,7 @@
 
         <!-- Column 3: Completed Queues -->
         <div class="bg-gray-100 w-3/12 flex flex-col">
-            <!-- <div class="text-6xl flex items-center justify-center font-bold h-[8rem] bg-green-700 text-white">
+            <div class="text-6xl flex items-center justify-center font-bold h-[8rem] bg-green-700 text-white">
                 คิวที่เรียกไปแล้ว
             </div>
             <div class="overflow-hidden flex-grow relative">
@@ -43,17 +43,10 @@
                         {{ queue }}
                     </div>
                 </div>
-            </div> -->
-            <div class="marquee">
-                <ul class="marquee-content" ref="marqueeContent">
-                    <li v-for="(queue, index) in displayQueues" :key="queue + '-' + index">
-                        <div>{{ qeue }}</div>
-                    </li>
-                </ul>
             </div>
+
+
         </div>
-
-
     </div>
 
     <div class="fixed bottom-0 w-full bg-black overflow-hidden">
@@ -87,8 +80,9 @@ const upcomingQueues = ['198', '199', '100', '101', '198', '199', '100', '101', 
 // const completedQueues = ['111', '111', '111', '111', '111', '111', '111', '111', '111', '111', '111', '111'];
 
 const completedQueues = ref([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]); // Example data
-const marqueeContent = ref(null);
-const maxVisibleItems = 5;
+const maxVisibleItems = 10;
+const itemHeight = 8; // Height of each item in 'rem'
+const rows = Math.ceil(completedQueues.value.length / 2);
 
 const displayQueues = computed(() => {
     if (completedQueues.value.length > maxVisibleItems) {
@@ -97,32 +91,8 @@ const displayQueues = computed(() => {
     return completedQueues.value;
 });
 
-onMounted(() => {
-    const root = document.documentElement;
-    const marqueeElementsDisplayed = getComputedStyle(root).getPropertyValue('--marquee-elements-displayed');
+const scrollHeight = computed(() => `${rows * itemHeight}rem`);
 
-    root.style.setProperty('--marquee-elements', marqueeContent.value.children.length);
-
-    for (let i = 0; i < marqueeElementsDisplayed; i++) {
-        marqueeContent.value.appendChild(marqueeContent.value.children[i].cloneNode(true));
-    }
-});
-
-
-const defaultList = [
-    { id: 100, text: 'Lightweight' },
-    { id: 101, text: 'Customizable' },
-    { id: 102, text: 'Mobile' },
-    { id: 103, text: 'Vue' },
-    { id: 104, text: 'Library' },
-    { id: 105, text: 'VantUI' },
-    { id: 106, text: '666' },
-];
-
-const list = ref([...defaultList]);
-const add = () => {
-    list.value.push({ id: Math.random(), text: 'Barrage' });
-};
 </script>
 
 <style>
