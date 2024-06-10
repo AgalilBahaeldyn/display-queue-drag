@@ -2,9 +2,7 @@
 export default defineNuxtConfig({
   devtools: { enabled: false },
   ssr:false,
-  modules: [
-    '@nuxtjs/tailwindcss'
-  ],
+  modules: ['@nuxtjs/tailwindcss', "nuxt-marquee"],
   app: {
     head: {
       link: [
@@ -23,6 +21,7 @@ export default defineNuxtConfig({
   },
   plugins: [
     '@/plugins/mqtt',
+    '@/plugins/Vue3Marquee.client.ts'
   ],
   // css: ['@/assets/main.css']
 })

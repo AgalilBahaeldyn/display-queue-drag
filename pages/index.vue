@@ -31,22 +31,30 @@
 
         <!-- Column 3: Completed Queues -->
         <div class="bg-gray-100 w-3/12 flex flex-col">
-            <div class="text-6xl flex items-center justify-center font-bold h-[8rem] bg-green-700 text-white">
+            <div class="text-6xl  flex items-center justify-center font-bold py-9  bg-green-700 text-white">
                 คิวที่เรียกไปแล้ว
             </div>
-            <div class="overflow-hidden flex-grow relative">
-                <div class="grid grid-cols-2 gap-2 flex-grow"
-                    :class="{ 'animate-scroll-up': completedQueues.length > maxVisibleItems }"
-                    :style="{ height: scrollHeight }">
-                    <div class="bg-black text-yellow-500 text-7xl font-extrabold p-2 flex-grow flex items-center justify-center"
-                        v-for="(queue, index) in displayQueues" :key="index">
-                        {{ queue }}
+            <div class="overflow-hidden flex justify-center pb-10 pt-[rem]">
+                <div v-if="completedQueues.length <= 10" class="" vertical :clone="true">
+                    <div class="grid grid-cols-2 gap-2 flex-grow">
+                        <div class="bg-black text-yellow-500 text-7xl font-extrabold w-full p-4 !px-16 flex-grow flex items-center justify-center"
+                            v-for="(queue, index) in completedQueues" :key="index">
+                            {{ queue }}
+                        </div>
                     </div>
                 </div>
+                <Vue3Marquee v-else class="" vertical :clone="true">
+                    <div class="grid grid-cols-2 gap-2 flex-grow">
+                        <div class="bg-black text-yellow-500 text-7xl font-extrabold w-full p-4 px-10 flex-grow flex items-center justify-center"
+                            v-for="(queue, index) in completedQueues" :key="index">
+                            {{ queue }}
+                        </div>
+                    </div>
+                </Vue3Marquee>
             </div>
-
-
         </div>
+
+
     </div>
 
     <div class="fixed bottom-0 w-full bg-black overflow-hidden">
@@ -77,25 +85,37 @@ const mqttSub = async () => {
 };
 const drugCounters = ['7', '8', '9', '10',];
 const upcomingQueues = ['198', '199', '100', '101', '198', '199', '100', '101', '198', '99', '100', '101', '198', '199', '100', '101'];
-// const completedQueues = ['111', '111', '111', '111', '111', '111', '111', '111', '111', '111', '111', '111'];
+const completedQueues = ['Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6', 'Q7', 'Q8','Q9', 'Q10', 'Q11', 'Q12' ];
 
-const completedQueues = ref([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]); // Example data
-const maxVisibleItems = 10;
-const itemHeight = 8; // Height of each item in 'rem'
-const rows = Math.ceil(completedQueues.value.length / 2);
-
-const displayQueues = computed(() => {
-    if (completedQueues.value.length > maxVisibleItems) {
-        return [...completedQueues.value, ...completedQueues.value];
-    }
-    return completedQueues.value;
-});
-
-const scrollHeight = computed(() => `${rows * itemHeight}rem`);
 
 </script>
 
 <style>
+/* .animate-scroll-up {
+    animation: scroll-up 7s linear infinite;
+}
+
+@keyframes scroll-up {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-50%);
+    }
+} */
+
+@keyframes scrolling-left {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/* คุณสามารถเพิ่มสไตล์เพิ่มเติมที่นี่ */
 #rssBlock {
     left: 0;
     /* height: 80px; */
@@ -122,124 +142,6 @@ const scrollHeight = computed(() => `${rows * itemHeight}rem`);
     animation: scrolling-left 20s linear infinite;
 }
 
-.overflow-hidden {
-    overflow: hidden;
-}
-
-/* scroll up */
-:root {
-    --marquee-width: 20vw;
-    --marquee-height: 80vh;
-    --marquee-elements-displayed: 5;
-    --marquee-element-height: calc(var(--marquee-height) / var(--marquee-elements-displayed));
-    --marquee-animation-duration: calc(var(--marquee-elements) * 3s);
-}
-
-.marquee {
-    width: var(--marquee-width);
-    height: var(--marquee-height);
-    background-color: #111;
-    color: #eee;
-    overflow: hidden;
-    position: relative;
-}
-
-.marquee:before,
-.marquee:after {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    height: 10rem;
-    content: "";
-    z-index: 1;
-}
-
-.marquee:before {
-    top: 0;
-    background: linear-gradient(to bottom, #111 0%, transparent 100%);
-}
-
-.marquee:after {
-    bottom: 0;
-    background: linear-gradient(to top, #111 0%, transparent 100%);
-}
-
-.marquee-content {
-    list-style: none;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    animation: scrolling var(--marquee-animation-duration) linear infinite;
-}
-
-@keyframes scrolling {
-    0% {
-        transform: translateY(0);
-    }
-
-    100% {
-        transform: translateY(calc(-1 * var(--marquee-element-height) * var(--marquee-elements)));
-    }
-}
-
-.marquee-content li {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-shrink: 0;
-    width: 100%;
-    height: var(--marquee-element-height);
-    font-size: calc(var(--marquee-width)*3/4);
-    white-space: nowrap;
-}
-
-.marquee-content li img {
-    width: 100%;
-    border: 2px solid #eee;
-}
-
-@media (max-width: 600px) {
-    html {
-        font-size: 12px;
-    }
-
-    :root {
-        --marquee-width: 100vw;
-        --marquee-height: 60vh;
-        --marquee-elements-displayed: 3;
-    }
-
-    .marquee:before,
-    .marquee:after {
-        height: 5rem;
-    }
-}
-
-/* .animate-scroll-up {
-    animation: scroll-up 7s linear infinite;
-}
-
-@keyframes scroll-up {
-    0% {
-        transform: translateY(0);
-    }
-
-    100% {
-        transform: translateY(-50%);
-    }
-} */
-
-@keyframes scrolling-left {
-    0% {
-        transform: translateX(0);
-    }
-
-    100% {
-        transform: translateX(-100%);
-    }
-}
-
-/* คุณสามารถเพิ่มสไตล์เพิ่มเติมที่นี่ */
 .barrage {
     white-space: nowrap;
     animation: barrage 30s linear infinite;
