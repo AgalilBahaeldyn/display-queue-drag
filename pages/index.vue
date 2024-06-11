@@ -6,7 +6,7 @@
 }
 </style>
 <template>
-    <div class="mx-auto flex h-screen pb-16">
+    <div class="mx-auto flex h-screen pb-20">
         <!-- Column 1: Drug Counters -->
         <div class="bg-gray-100  w-2/12 flex flex-col">
             <div class="text-8xl flex items-center justify-center font-extrabold h-[8rem] bg-yellow-500">ช่อง
@@ -19,14 +19,36 @@
 
         <!-- Column 2: Upcoming Queues -->
         <div class="bg-gray-100 w-7/12 mx-2 flex flex-col">
-            <div class="text-8xl flex items-center justify-center font-extrabold h-[8rem]  bg-rose-500 text-white">
+            <div class="text-8xl flex items-center justify-center font-extrabold h-[9.5rem]  bg-rose-500 text-white">
                 คิวรับยา</div>
-            <div class="grid grid-cols-4 gap-2 flex-grow" v-for="(queue,index) in slot7" :key="queue">
-                <div class="bg-blue-800 text-white text-8xl font-extrabold flex-grow flex items-center justify-center" >
-                    {{ queue }}
+            <div class="flex flex-col gap-2 h-full w-full flex-grow">
+                <div class="grid grid-cols-4 flex-grow" style="height:25%">
+                    <div v-for="(index) in 4" :key="index"
+                        class="bg-blue-800 text-white text-7xl font-extrabold flex-grow flex items-center justify-center">
+                        <span v-if="slot7[index - 1]">{{ slot7[index - 1] }}</span>
+                    </div>
                 </div>
+                <div class="grid grid-cols-4 flex-grow" style="height:25%">
+                    <div v-for="(index) in 4" :key="index"
+                        class="bg-blue-800 text-white text-7xl font-extrabold flex-grow flex items-center justify-center">
+                        <span v-if="slot8[index - 1]">{{ slot8[index - 1] }}</span>
+                    </div>
+                </div>
+                <div class="grid grid-cols-4 flex-grow" style="height:25%">
+                    <div v-for="(index) in 4" :key="index"
+                        class="bg-blue-800 text-white text-7xl font-extrabold flex-grow flex items-center justify-center">
+                        <span v-if="slot9[index - 1]">{{ slot9[index - 1] }}</span>
+                    </div>
+                </div>
+                <div class="grid grid-cols-4 flex-grow" style="height:25%">
+                    <div v-for="(index) in 4" :key="index"
+                        class="bg-blue-800 text-white text-7xl font-extrabold flex-grow flex items-center justify-center">
+                        <span v-if="slot10[index - 1]">{{ slot10[index - 1] }}</span>
+                    </div>
+                </div>
+
             </div>
-            <div class="grid grid-cols-4 gap-2 flex-grow" v-for="(queue,index) in slot8" :key="queue">
+            <!-- <div class="grid grid-cols-4 gap-2 flex-grow" v-for="(queue,index) in slot8" :key="queue">
                 <div class="bg-blue-800 text-white text-8xl font-extrabold flex-grow flex items-center justify-center" >
                     {{ queue }}
                 </div>
@@ -40,7 +62,7 @@
                 <div class="bg-blue-800 text-white text-8xl font-extrabold flex-grow flex items-center justify-center" >
                     {{ queue }}
                 </div>
-            </div>
+            </div> -->
         </div>
 
         <!-- Column 3: Completed Queues -->
@@ -49,7 +71,7 @@
                 คิวที่เรียกไปแล้ว
             </div>
             <div class="overflow-hidden flex justify-center pb-10 pt-[rem]">
-                
+
                 <div v-if="completedQueues.length <= 10" class="" vertical :clone="true">
                     <div class="grid grid-cols-2 gap-2 flex-grow">
                         <div class="bg-black text-yellow-500 text-7xl font-extrabold w-full p-4 !px-16 flex-grow flex items-center justify-center"
@@ -89,38 +111,35 @@
 import { $mqtt } from "vue-paho-mqtt";
 const mqttSub = async () => {
     try {
-        $mqtt.subscribe(`chainathospital_drug_monitor/1`, async(message) => {
+        $mqtt.subscribe(`chainathospital_drug_monitor/1`, async (message) => {
             // เมื่อมีการรับข้อมูลจาก mqtt
-            const parsedMessage =await JSON.parse(message);
-            console.log('parsedMessage',parsedMessage)
-            slot7.value =await parsedMessage[0].value
-            slot8.value =await parsedMessage[1].value
-            slot9.value =await parsedMessage[2].value
-            slot10.value =await parsedMessage[3].value
-            completedQueues.value =await parsedMessage[5].value
-            console.log('slot 7' , slot7.value)
-            console.log('slot 8' , slot8.value)
-            console.log('slot 9' , slot9.value)
+            const parsedMessage = await JSON.parse(message);
+            console.log('parsedMessage', parsedMessage)
+            slot7.value = await parsedMessage[0].value
+            slot8.value = await parsedMessage[1].value
+            slot9.value = await parsedMessage[2].value
+            slot10.value = await parsedMessage[3].value
+            completedQueues.value = await parsedMessage[5].value
+            console.log('slot 7', slot7.value)
+            console.log('slot 8', slot8.value)
+            console.log('slot 9', slot9.value)
 
-            console.log('slot 10' , slot10.value)
-            console.log('slot completedQueues ' , completedQueues.value)
+            console.log('slot 10', slot10.value)
+            console.log('slot completedQueues ', completedQueues.value)
 
         });
     } catch (error) {
         console.error(error);
     }
 };
-onMounted(()=>{
+onMounted(() => {
     mqttSub();
 })
 const slot7 = ref([])
 const slot8 = ref([])
 const slot9 = ref([])
 const slot10 = ref([])
-const slot11 = ref([])
-const slotwait = ref([])
-const drugCounters = ref([]);
-const upcomingQueues = [];
+const drugCounters = ref([7, 8, 9, 10]);
 const completedQueues = ref([]);
 
 
