@@ -15,6 +15,8 @@ export default defineNuxtPlugin((nuxtApp) => {
         username: 'server_mix_station',
         password: 'mix@stati0n!$',
         useSSL: false,
+        watchdogTimeout: 1000,  // 1 second
+        reconnectTimeout: 1000, // 1 second
       },
     })
   );
