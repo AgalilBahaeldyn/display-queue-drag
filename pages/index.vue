@@ -11,7 +11,7 @@
         <div class="bg-gray-100  w-2/12 flex flex-col">
             <div class="text-8xl flex items-center justify-center font-extrabold h-[8rem] bg-yellow-500">ช่อง
             </div>
-            <div class="mb-2 bg-black glow text-9xl font-extrabold flex-grow flex items-center justify-center"
+            <div class="mb-2 bg-black glow text-7xl font-extrabold flex-grow flex items-center justify-center"
                 v-for="counter in drugCounters" :key="counter">
                 {{ counter }}
             </div>
@@ -21,29 +21,41 @@
         <div class="bg-gray-100 w-7/12 mx-2 flex flex-col">
             <div class="text-8xl flex items-center justify-center font-extrabold h-[9.5rem]  bg-rose-500 text-white">
                 คิวรับยา</div>
-            <div class="flex flex-col gap-2 h-full w-full flex-grow">
-                <div class="grid grid-cols-4 flex-grow" style="height:25%">
+            <div class="flex flex-col  h-full w-full flex-grow">
+                <div class="grid grid-cols-4 flex-grow">
                     <div v-for="(index) in 4" :key="index"
-                        class="bg-blue-800 text-white text-7xl font-extrabold flex-grow flex items-center justify-center">
+                        class="mb-1 bg-blue-800 text-white text-8xl font-extrabold flex-grow flex items-center justify-center">
                         <span v-if="slot7[index - 1]">{{ slot7[index - 1] }}</span>
                     </div>
                 </div>
-                <div class="grid grid-cols-4 flex-grow" style="height:25%">
+                <div class="grid grid-cols-4 flex-grow">
                     <div v-for="(index) in 4" :key="index"
-                        class="bg-blue-800 text-white text-7xl font-extrabold flex-grow flex items-center justify-center">
+                        class="mb-1 bg-blue-800 text-white text-8xl font-extrabold flex-grow flex items-center justify-center">
                         <span v-if="slot8[index - 1]">{{ slot8[index - 1] }}</span>
                     </div>
                 </div>
-                <div class="grid grid-cols-4 flex-grow" style="height:25%">
+                <div class="grid grid-cols-4 flex-grow">
                     <div v-for="(index) in 4" :key="index"
-                        class="bg-blue-800 text-white text-7xl font-extrabold flex-grow flex items-center justify-center">
+                        class="mb-1 bg-blue-800 text-white text-8xl font-extrabold flex-grow flex items-center justify-center">
                         <span v-if="slot9[index - 1]">{{ slot9[index - 1] }}</span>
                     </div>
                 </div>
-                <div class="grid grid-cols-4 flex-grow" style="height:25%">
+                <div class="grid grid-cols-4 flex-grow">
                     <div v-for="(index) in 4" :key="index"
-                        class="bg-blue-800 text-white text-7xl font-extrabold flex-grow flex items-center justify-center">
+                        class="mb-1 bg-blue-800 text-white text-8xl font-extrabold flex-grow flex items-center justify-center">
                         <span v-if="slot10[index - 1]">{{ slot10[index - 1] }}</span>
+                    </div>
+                </div>
+                <div class="grid grid-cols-4 flex-grow">
+                    <div v-for="(index) in 4" :key="index"
+                        class="mb-1 bg-blue-800 text-white text-8xl font-extrabold flex-grow flex items-center justify-center">
+                        <span v-if="slot11[index - 1]">{{ slot11[index - 1] }}</span>
+                    </div>
+                </div>
+                <div class="grid grid-cols-4 flex-grow">
+                    <div v-for="(index) in 4" :key="index"
+                        class="mb-1 bg-blue-800 text-white text-8xl font-extrabold flex-grow flex items-center justify-center">
+                        <span v-if="slot12[index - 1]">{{ slot12[index - 1] }}</span>
                     </div>
                 </div>
 
@@ -73,7 +85,7 @@
             <div class="overflow-hidden flex justify-center pb-10 pt-[rem]">
 
                 <div v-if="completedQueues.length <= 10" class="" vertical :clone="true">
-                    <div class="grid grid-cols-2 gap-2 flex-grow">
+                    <div class="grid grid-cols-1 gap-2 flex-grow">
                         <div class="bg-black text-yellow-500 text-7xl font-extrabold w-full p-4 !px-16 flex-grow flex items-center justify-center"
                             v-for="(queue, index) in completedQueues" :key="index">
                             {{ queue }}
@@ -81,7 +93,7 @@
                     </div>
                 </div>
                 <Vue3Marquee v-else class="" vertical :clone="true">
-                    <div class="grid grid-cols-2 gap-2 flex-grow">
+                    <div class="grid grid-cols-1 gap-2 flex-grow">
                         <div class="bg-black text-yellow-500 text-7xl font-extrabold w-full p-4 px-10 flex-grow flex items-center justify-center"
                             v-for="(queue, index) in completedQueues" :key="index">
                             {{ queue }}
@@ -94,16 +106,17 @@
 
     </div>
 
-    <div class="fixed bottom-0 w-full bg-black overflow-hidden">
+    <div class="fixed bottom-0 w-full bg-black overflow-hidden text-center py-3">
         <!-- <div class="barrage text-white text-4xl font-bold pt-4">
             อักษรวิ่งจากขวาไปซ้าย วนลูป
         </div> -->
-        <div id="rssBlock">
+        <span class=" text-white text-7xl font-bold pt-2">&nbsp;กรุณานำบัตรประชาชนมาติดต่อทุกครั้ง!</span>
+        <!-- <div id="rssBlock">
             <p class="cnnContents">
                 <span
-                    class="marqueeStyle text-white text-8xl font-bold pt-2">&nbsp;กรุณานำบัตรประชาชนมาติดต่อทุกครั้ง!</span>
+                    class="marqueeStyle text-white text-7xl font-bold pt-2">&nbsp;กรุณานำบัตรประชาชนมาติดต่อทุกครั้ง!</span>
             </p>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -139,7 +152,9 @@ const slot7 = ref([])
 const slot8 = ref([])
 const slot9 = ref([])
 const slot10 = ref([])
-const drugCounters = ref([7, 8, 9, 10]);
+const slot11 = ref([])
+const slot12 = ref([])
+const drugCounters = ref([7, 8, 9, 10, 11, 12]);
 const completedQueues = ref([]);
 
 
